@@ -998,7 +998,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "URLRoute", function() { return URLRoute; });
 class URLRoute {
     getRoute() {
-        return 'http://localhost:64295/TravelManagement';
+        return 'http://travelmanagementjp.azurewebsites.net';
     }
 }
 

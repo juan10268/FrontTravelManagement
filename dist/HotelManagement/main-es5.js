@@ -1053,7 +1053,7 @@ var URLRoute = /** @class */ (function () {
     function URLRoute() {
     }
     URLRoute.prototype.getRoute = function () {
-        return 'http://localhost:64295/TravelManagement';
+        return 'http://travelmanagementjp.azurewebsites.net';
     };
     return URLRoute;
 }());
