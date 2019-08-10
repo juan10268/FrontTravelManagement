@@ -97,6 +97,5 @@ export class HotelComponent implements OnInit {
         toast('Not Works', 3000);
       }
     });
-    this.getHotelsList();
   }
 }

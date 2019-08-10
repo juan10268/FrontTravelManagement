@@ -1,5 +1,5 @@
 export class URLRoute {
     getRoute() {
-        return 'http://travelmanagementjp.azurewebsites.net';
+        return 'https://travelmanagementjp.azurewebsites.net/TravelManagement';
     }
 }

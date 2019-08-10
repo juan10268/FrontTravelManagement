@@ -99,12 +99,12 @@ export class ReservationComponent implements OnInit {
 
   searchDocument(event) {
     this.oPersonService.searchForPersonID(event.target.value).subscribe((data: any) => {
-      if (data.personIdentification !== null) {
+      if (data.length !== 0) {
         this.personName = data[0].personName;
         this.phonePersonReservation = data[0].personPhone;
       } else {
         event.target.value = '';
-        toast('Person ID exists already', 3000);
+        toast('Person ID not exists already', 3000);
       }
     });
   }
