@@ -47,46 +47,44 @@
                         <div class="modal" materialize="modal" [materializeParams]="model1Params" [materializeActions]="modalActions1">
                             <div class="modal-content">
                                 <div class="container">
-                                    
-                                        <h5 class="center-align">Details about Reservation</h5>
-                                        <div class="row">                        
-                                            <div class="input-field col s4">
-                                                <input type="number" class="validate" id="reservationPersonID" name="reservationPersonID" placeholder="Person ID" (change)="searchDocument($event)" ngModel #reservationPersonID="ngModel" minlength="3">
-                                                <span>{{namePersonFound}}</span>
-                                            </div>
-                                            <div class="input-field col s4">
-                                                <input type="text" readonly="readonly" id="reservationPersonName" name="reservationPersonName" value="{{personName}}">
-                                                <span>Reservation Person Name</span>
-                                            </div>
-                                            <div class="input-field col s4">
-                                                <input type="number" readonly="readonly" id="phonePersonReservation" name="phonePersonReservation" value="{{phonePersonReservation}}">
-                                                <span>Reservation Person Phone</span>
-                                            </div>
-                                        </div>                       
-                                        <div class="row">
-                                            <div class="input-field col s4" align="center">
-                                                <input type="Date" class="validate" id="sinceReservation" name="sinceReservation" placeholder="Date of Birth" ngModel #sinceReservation="ngModel" required minlength="3">
-                                                <span>Since Reservation</span>
-                                            </div>
-                                            <div class="input-field col s4" align="center">
-                                                <input type="Date" class="validate" id="untilReservation" name="untilReservation" placeholder="Date of Birth" ngModel #untilReservation="ngModel" required minlength="3">
-                                                <span>Until Reservation</span>
-                                            </div>
-                                            <div class="input-field col s4">
-                                                <input type="number" id="quantityPersonReservation" name="quantityPersonReservation" ngModel #quantityPersonReservation="ngModel">
-                                                <span>Quantity Person Reservation</span>
-                                            </div>
+                                    <h5 class="center-align">Details about Reservation</h5>
+                                    <div class="row">                        
+                                        <div class="input-field col s4">
+                                            <input type="number" class="validate" id="reservationPersonID" name="reservationPersonID" placeholder="Person ID" (change)="searchDocument($event)" ngModel #reservationPersonID="ngModel" minlength="3">
                                         </div>
-                                        <div class="row">
-                                            <div class="input-field col s12">
-                                                <textarea id="descriptionReservation" class="materialize-textarea" name="descriptionReservation" ngModel #descriptionReservation="ngModel"></textarea>
-                                                <span>Description Reservation</span>
-                                            </div>
+                                        <div class="input-field col s4">
+                                            <input type="text" readonly="readonly" id="reservationPersonName" name="reservationPersonName" value="{{personName}}">
+                                            <span>Reservation Person Name</span>
                                         </div>
-                                        <div class="row">
-                                            <a (click)="addReservation(reservationForm)" class="center-align waves-effect waves-light btn-small">Add Reservation</a>    
-                                            <a (click)="closeModal()" class="center-align waves-effect waves-light btn-small">Close</a>       
-                                        </div>                                       
+                                        <div class="input-field col s4">
+                                            <input type="number" readonly="readonly" id="phonePersonReservation" name="phonePersonReservation" value="{{phonePersonReservation}}">
+                                            <span>Reservation Person Phone</span>
+                                        </div>
+                                    </div>                       
+                                    <div class="row">
+                                        <div class="input-field col s4" align="center">
+                                            <input type="Date" class="validate" id="sinceReservation" name="sinceReservation" placeholder="Date of Birth" ngModel #sinceReservation="ngModel" required minlength="3">
+                                            <span>Since Reservation</span>
+                                        </div>
+                                        <div class="input-field col s4" align="center">
+                                            <input type="Date" class="validate" id="untilReservation" name="untilReservation" placeholder="Date of Birth" ngModel #untilReservation="ngModel" required minlength="3">
+                                            <span>Until Reservation</span>
+                                        </div>
+                                        <div class="input-field col s4">
+                                            <input type="number" id="quantityPersonReservation" name="quantityPersonReservation" ngModel #quantityPersonReservation="ngModel">
+                                            <span>Quantity Person Reservation</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <textarea id="descriptionReservation" class="materialize-textarea" name="descriptionReservation" ngModel #descriptionReservation="ngModel"></textarea>
+                                            <span>Description Reservation</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <a (click)="addReservation(reservationForm)" class="center-align waves-effect waves-light btn-small">Add Reservation</a>    
+                                        <a (click)="closeModal()" class="center-align waves-effect waves-light btn-small">Close</a>       
+                                    </div>                                       
                                 </div>                       
                             </div>                    
                         </div>
@@ -104,7 +102,6 @@
                 </div>
                 <div class="input-field col s6">
                     <input type="number" class="validate" id="personIdentification"  (change)="getReservationForPerson($event)" name="personIdentification" placeholder="Person ID" minlength="3">
-                    <span>{{namePersonFound}}</span>
                 </div>                
             </div>
             <div class="row">
