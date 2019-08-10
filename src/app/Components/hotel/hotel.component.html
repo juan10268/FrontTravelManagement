@@ -1,0 +1,113 @@
+<html>
+    <h4 align="center">Hotel Page</h4>
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s6"><a class="active" href="#addForm">Add new hotel</a></li>
+                <li class="tab col s6"><a href="#listForm">Hotel list</a></li>
+            </ul>
+        </div>
+        <div id="addForm" class="col s12">
+            <form class="col s12 border border-dark" #newHotelForm="ngForm" (ngSubmit)="addNewHotel(newHotelForm)">
+                <div style="width: 1100px;position: relative;margin-left:auto;margin-right: auto;">
+                    <div class="row">        
+                        <div class="input-field col s6">
+                            <input type="text" class="validate" id="nameHotel" name="nameHotel" placeholder="Name Hotel" ngModel #nameHotel="ngModel" minlength="3">
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" class="validate" id="addressHotel" name="addressHotel" placeholder="Address Hotel" ngModel #addressHotel="ngModel" required minlength="3">
+                        </div>
+                    </div>
+                    <div class="row">                        
+                        <div class="input-field col s12" align="center">
+                            <input type="text" class="validate" id="locationHotel" name="locationHotel" placeholder="Hotel location" ngModel #locationHotel="ngModel" required minlength="3">
+                        </div>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="checkbox" checked="checked" id="availableHotel" name="availableHotel" ngModel #availableHotel="ngModel">
+                            <span>Available</span>
+                        </label>
+                    </div>    
+                    <div class="row">
+                        <div class="center-align input-field col s12">
+                            <button class="btn-large btn-submit" type="submit">Add hotel</button>
+                        </div>
+                    </div>        
+                </div>            
+            </form>
+        </div>
+        <div id="listForm" class="col s12">
+            <div class="col s12 border border-dark" align="center">
+                <div class="input-field col s9">
+                    <input type="text" placeholder="Search your hotel for location" (change)="onChangeLocation(nameHotel)" class="validate" name="nameHotel" ngModel #nameHotel="ngModel" maxlength="10">
+                </div>                
+            </div>
+            <div class="row">
+                <div class="col s12" align="center">
+                    <h5>Hotel List</h5>
+                </div>
+                <table>
+                    <thead>
+                        <th>Name Hotel</th>
+                        <th>Location Hotel</th>
+                        <th>Address Hotel</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let i of oLstHotels">
+                            <td>{{i.nameHotel}}</td>                            
+                            <td>{{i.locationHotel}}</td>
+                            <td>{{i.addressHotel}}</td>
+                            <a (click)="viewMoreDetailsAboutHotel(i)" class="waves-effect waves-light btn-small">Hotel details</a>                        
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="modal" materialize="modal" [materializeParams]="model1Params" [materializeActions]="modalActions1">
+                    <div class="modal-content">
+                        <div class="container">
+                            <form class="col s12 border border-dark" #updateHotelForm="ngForm" *ngFor="let k of specifiedHotel">
+                                <h5 class="center-align">More hotel details</h5>
+                                <div class="row">
+                                    <div class="input-field col s4">
+                                        <input readonly="readonly" value="{{k.idHotel}}" name="ID Hotel">
+                                        <span>ID Hotel</span>
+                                    </div>
+                                    <div class="input-field col s8">
+                                        <input name="Name Hotel" placeholder="Write for modify" id="nameHotel" name="nameHotel" ngModel #nameHotel="ngModel" required minlength="3">
+                                        <span>Name Hotel = {{k.nameHotel}}</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s6">
+                                        <input name="Address Hotel" placeholder="Write for modify" id="locationHotel" name="locationHotel" ngModel #locationHotel="ngModel" required minlength="3">
+                                        <span>Location Hotel = {{k.locationHotel}} </span>
+                                    </div>
+                                    <div class="input-field col s6">
+                                        <input name="Location Hotel" placeholder="Write for modify" id="addressHotel" name="addressHotel" ngModel #addressHotel="ngModel" required minlength="3">
+                                        <span>Address Hotel = {{k.addressHotel}} </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label>
+                                        <div *ngIf="k.availableHotel; else notCheck">
+                                            <input type="checkbox" checked= "checked" (click)='changeStatusHotel(k.idHotel,$event)'/>
+                                            <span>Available Hotel</span>
+                                        </div>
+                                        <ng-template #notCheck>
+                                            <input type="checkbox" (click)='changeStatusHotel(k.idHotel,$event)'/>                                                
+                                            <span>Available Hotel</span>
+                                        </ng-template>
+                                    </label>  
+                                </div>
+                                <div class="row">
+                                    <a (click)="updateHotel(updateHotelForm, k)" class="center-align waves-effect waves-light btn-small">Update</a>    
+                                    <a (click)="closeModal()" class="center-align waves-effect waves-light btn-small">Close</a>        
+                                </div>   
+                            </form>                           
+                        </div>                       
+                    </div>                    
+                </div>                   
+            </div>    
+        </div>
+    </div>    
+</html>    

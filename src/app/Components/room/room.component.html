@@ -1,0 +1,142 @@
+<html>
+    <h4 align="center">Rooms Page</h4>
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s6"><a class="active" href="#addForm">Add new room for a hotel</a></li>
+                <li class="tab col s6"><a href="#listForm">Rooms list per hotel</a></li>
+            </ul>
+        </div>
+        <div id="addForm" class="col s12">
+            <form class="col s12 border border-dark" #newRoomForm="ngForm" (ngSubmit)="addNewRoom(newRoomForm)">
+                <div style="width: 1100px;position: relative;margin-left:auto;margin-right: auto;">
+                    <div class="row" align="center">
+                        <div class="col s7">
+                            <label>Select a Hotel</label>
+                            <select class="browser-default" id="IDRoomHotel" name="IDRoomHotel" ngModel #IDRoomHotel="ngModel" required>
+                                <option *ngFor="let i of oLstHotels" [ngValue]="i.idHotel">{{i.nameHotel}} - {{i.locationHotel}}</option>
+                            </select>                             
+                        </div>                                             
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="number" class="validate" id="quantityRoom" name="quantityRoom" placeholder="Quantity of rooms" ngModel #quantityRoom="ngModel" minlength="3">
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" class="validate" id="roomName" name="roomName" placeholder="Room Name" ngModel #roomName="ngModel" minlength="3">
+                        </div>
+                    </div>
+                    <div class="row">                        
+                        <div class="input-field col s4">
+                            <input type="number" class="validate" id="basePriceRoom" name="basePriceRoom" value="basePrice" placeholder="Base price" (change)="addPrices($event)" ngModel #basePriceRoom="ngModel" minlength="3">
+                        </div>
+                        <div class="input-field col s4">
+                            <input type="number" class="validate" id="taxesPercentRooms" name="taxesPercentRooms" placeholder="Tax Percent Room" (change)="addPrices($event)" ngModel #taxesPercentRooms="ngModel" required minlength="3">
+                            <span>{{statementPrice}}</span>
+                        </div>
+                        <div class="input-field col s4">
+                            <input type="number" readonly="readonly" value="{{oTotalPrice}}" class="validate" id="totalPriceRoom" name="totalPriceRoom" ngModel #totalPriceRoom="ngModel" minlength="3">
+                            <span>Total Price Room</span>
+                        </div>                        
+                    </div>
+                    <div>
+                        <label>
+                            <input type="checkbox" checked="checked" id="availableHotel" name="availableHotel" ngModel #availableHotel="ngModel">
+                            <span>Room Available</span>
+                        </label>
+                    </div>    
+                    <div class="row">
+                        <div class="center-align input-field col s12">
+                            <button class="btn-large btn-submit" type="submit">Add room</button>
+                        </div>
+                    </div>        
+                </div>            
+            </form>
+        </div>
+        <div id="listForm" class="col s12">
+            <div class="col s12 border border-dark" align="center">
+                <div class="col s12">
+                    <span>Select for hotel</span>
+                    <select class="browser-default" id="IDRoomHotel" name="IDRoomHotel" (change)="searchForHotelPerHotel(IDRoomHotel)" ngModel #IDRoomHotel="ngModel" required>
+                        <option *ngFor="let i of oLstHotels" [ngValue]="i.idHotel">{{i.nameHotel}} - {{i.locationHotel}}</option>
+                    </select>                             
+                </div>                
+            </div>
+            <div class="row">
+                <div class="col s12" align="center">
+                    <h5>List of rooms per hotel</h5>
+                </div>
+                <table>
+                    <thead>
+                        <th>Room Name</th>
+                        <th>Quantity Room</th>
+                        <th>Total price Room</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let i of oLstRooms">
+                            <td>{{i.roomName}}</td>                            
+                            <td>{{i.quantityRoom}}</td>
+                            <td>{{i.totalPriceRoom}}</td>
+                            <a (click)="viewMoreAboutThisRoom(i)" class="waves-effect waves-light btn-small">About this room</a>                        
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="modal" materialize="modal" [materializeParams]="model1Params" [materializeActions]="modalActions1">
+                    <div class="modal-content">
+                        <div class="container">
+                            <form class="col s12 border border-dark" #updateRoomForm="ngForm" *ngFor="let k of oLstSpecifiedRoom">
+                                <h5 class="center-align">About this room</h5>
+                                <div class="row">
+                                    <div class="input-field col s4">
+                                        <input readonly="readonly" value="{{k.idRoom}}" name="ID Hotel">
+                                        <span>ID Room</span>
+                                    </div>
+                                    <div class="input-field col s4">
+                                        <input name="Name Hotel" placeholder="Write for modify" id="roomName" name="roomName" ngModel #roomName="ngModel" required minlength="3">
+                                        <span>Room Name = {{k.roomName}}</span>
+                                    </div>
+                                    <div class="input-field col s4">
+                                        <input name="Quantity Room" placeholder="Write for modify" id="quantityRoom" name="quantityRoom" ngModel #quantityRoom="ngModel" required minlength="3">
+                                        <span>Quantity Room= {{k.quantityRoom}}</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s4">
+                                        <input type="number" name="Base Price Room" (change)=updatePrices($event) placeholder="Write for modify" id="basePriceRoom" name="basePriceRoom" ngModel #basePriceRoom="ngModel" required minlength="3">
+                                        <span>Base Price Room= ${{k.basePriceRoom}} </span>
+                                    </div>
+                                    <div class="input-field col s4">
+                                        <input type="number" name="Tax Percent Room" (change)=updatePrices($event) placeholder="Write for modify" id="taxesPercentRooms" name="taxesPercentRooms" ngModel #taxesPercentRooms="ngModel" required minlength="3">
+                                        <span>Percent taxes= ${{k.taxesPercentRooms}}</span>
+                                        <br>
+                                        <span>{{uStatementPrice}}</span>
+                                    </div>
+                                    <div class="input-field col s4">
+                                        <input name="Total price room" value="{{uTotalPrice}}" placeholder="Write for modify" id="totalPriceRoom" name="totalPriceRoom" ngModel #totalPriceRoom="ngModel" required minlength="3">
+                                        <span>Total Price Room= ${{k.totalPriceRoom}} </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label>
+                                        <div *ngIf="k.availableRoom; else notCheck">
+                                            <input type="checkbox" checked= "checked" (click)='changeStatusRoom(k.idRoom,$event)'/>
+                                            <span>Available Hotel</span>
+                                        </div>
+                                        <ng-template #notCheck>
+                                            <input type="checkbox" (click)='changeStatusRoom(k.idRoom,$event)'/>                                                
+                                            <span>Available Room</span>
+                                        </ng-template>
+                                    </label>  
+                                </div>
+                                <div class="row">
+                                    <a (click)="updateRoom(updateRoomForm, k)" class="center-align waves-effect waves-light btn-small">Update</a>    
+                                    <a (click)="closeModal()" class="center-align waves-effect waves-light btn-small">Close</a>        
+                                </div>   
+                            </form>                           
+                        </div>                       
+                    </div>                    
+                </div>                   
+            </div>    
+        </div>
+    </div>    
+</html>

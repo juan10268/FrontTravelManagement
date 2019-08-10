@@ -1,0 +1,65 @@
+<html>
+    <h4 align="center">Person Registration Form</h4>
+    <div class="container">
+        <div id="addForm" class="col s12">
+            <form class="col s12 border border-dark" #newPersonForm="ngForm" (ngSubmit)="addNewPerson(newPersonForm)">
+                <div style="width: 1100px;position: relative;margin-left:auto;margin-right: auto;">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="number" class="validate" id="personIdentification" name="personIdentification" placeholder="ID" (change)="searchDocument($event)" ngModel #personIdentification="ngModel" minlength="3">
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" class="validate" id="personName" name="personName" placeholder="Name" ngModel #personName="ngModel" required minlength="3">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s4" align="center">
+                            <input type="Date" class="validate" id="personDateBirth" name="personDateBirth" placeholder="Date of Birth" ngModel #personDateBirth="ngModel" required minlength="3">
+                        </div>
+                        <div class="input-field col s4" align="center">
+                             <input type="email" class="validate" id="personEmail" name="personEmail" placeholder="Email" (change)="searchForEmailAvailability($event)" ngModel #personEmail="ngModel" required minlength="3">
+                        </div>
+                        <div class="input-field col s4" align="center">
+                            <input type="text" class="validate" id="personPhone" name="personPhone" placeholder="Phone Number" ngModel #personPhone="ngModel" required minlength="3">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6">
+                            <label>Gender</label>
+                            <select class="browser-default" id="personGender" name="personGender" ngModel #personGender="ngModel" required>
+                                <option value="Masculine">Masculine</option>
+                                <option value="Femenine">Femenine</option>
+                                <option value="Other">Other</option>
+                            </select>                             
+                        </div>                  
+                        <div class="col s6">
+                            <label>Document Type</label>
+                            <select class="browser-default" id="personTypeDocument" name="personTypeDocument"  ngModel #personTypeDocument="ngModel" required>
+                                <option value="CC">CC</option>
+                                <option value="TI">TI</option>
+                                <option value="CE">CE</option>
+                                <option value="RC">RC</option>
+                            </select>                             
+                        </div>
+                        <br><br><br>
+                        <div class="divider"></div>
+                        <div class="section">
+                            <h5>Emergency Contact Information</h5>
+                            <div class="input-field col s6" align="center">
+                                <input type="text" class="validate" id="personEmergencyContactName" name="personEmergencyContactName" placeholder="Emergency Contact Name" ngModel #personEmergencyContactName="ngModel" required minlength="3">
+                            </div>
+                            <div class="input-field col s6" align="center">
+                                <input type="text" class="validate" id="personEmergencyContactPhone" name="personEmergencyContactPhone" placeholder="Emergency Contact Phone" ngModel #personEmergencyContactPhone="ngModel" required minlength="3">
+                            </div>                        
+                        </div>
+                        <div class="row">
+                            <div class="center-align input-field col s12">
+                                <button class="btn-large btn-submit" type="submit">Add Person</button>                    
+                            </div>
+                        </div>                           
+                    </div>                      
+                </div>
+            </form>        
+        </div>
+    </div>
+</html>

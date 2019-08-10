@@ -1,0 +1,183 @@
+<html>
+    <h4 align="center">Reservation Page</h4>
+    <div class="row">
+        <div class="col s12">
+            <ul class="tabs">
+                <li class="tab col s6"><a class="active" href="#addForm">Add new reservation</a></li>
+                <li class="tab col s6"><a href="#listForm">Reservation list</a></li>
+            </ul>
+        </div>
+        <div id="addForm" class="col s12">
+            <form class="col s12 border border-dark" #reservationForm="ngForm">
+                <div style="width: 1100px;position: relative;margin-left:auto;margin-right: auto;">
+                    <div class="row">                       
+                        <div class="col s9">
+                            <span>Select for hotel</span>
+                            <select class="browser-default" id="IDRoomHotel" name="IDRoomHotel" (change)="lookForRooms(IDRoomHotel)" ngModel #IDRoomHotel="ngModel" required>
+                                <option *ngFor="let i of oLstHotels" [ngValue]="i.idHotel">{{i.nameHotel}} - {{i.locationHotel}}</option>
+                            </select>                             
+                        </div>                        
+                    </div>
+                    <div class="row">
+                        <div class="col s12" align="center">
+                            <h5>Rooms List Per Hotel</h5>
+                        </div>
+                        <table>
+                            <thead>
+                                <th>Room Name</th>
+                                <th>Base Price</th>
+                                <th>Taxes Percent</th>                                
+                                <th>Price Room</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let i of oLstRooms">
+                                    <td>{{i.roomName}}</td>
+                                    <td>{{i.basePriceRoom | currency}}</td>
+                                    <td>{{i.totalPriceRoom | percent}}</td>                            
+                                    <td>{{i.totalPriceRoom | currency}}</td>
+                                    <div *ngIf="showButtonReservation(i.availableRoom); else notCheck">
+                                        <a (click)="viewMoreAboutReservation(i)" class="waves-effect waves-light btn-small">Reservation Details</a>                        
+                                    </div>
+                                    <ng-template #notCheck>
+                                        <span>{{reasonWhyNotShow}}</span>
+                                    </ng-template>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="modal" materialize="modal" [materializeParams]="model1Params" [materializeActions]="modalActions1">
+                            <div class="modal-content">
+                                <div class="container">
+                                    
+                                        <h5 class="center-align">Details about Reservation</h5>
+                                        <div class="row">                        
+                                            <div class="input-field col s4">
+                                                <input type="number" class="validate" id="reservationPersonID" name="reservationPersonID" placeholder="Person ID" (change)="searchDocument($event)" ngModel #reservationPersonID="ngModel" minlength="3">
+                                                <span>{{namePersonFound}}</span>
+                                            </div>
+                                            <div class="input-field col s4">
+                                                <input type="text" readonly="readonly" id="reservationPersonName" name="reservationPersonName" value="{{personName}}">
+                                                <span>Reservation Person Name</span>
+                                            </div>
+                                            <div class="input-field col s4">
+                                                <input type="number" readonly="readonly" id="phonePersonReservation" name="phonePersonReservation" value="{{phonePersonReservation}}">
+                                                <span>Reservation Person Phone</span>
+                                            </div>
+                                        </div>                       
+                                        <div class="row">
+                                            <div class="input-field col s4" align="center">
+                                                <input type="Date" class="validate" id="sinceReservation" name="sinceReservation" placeholder="Date of Birth" ngModel #sinceReservation="ngModel" required minlength="3">
+                                                <span>Since Reservation</span>
+                                            </div>
+                                            <div class="input-field col s4" align="center">
+                                                <input type="Date" class="validate" id="untilReservation" name="untilReservation" placeholder="Date of Birth" ngModel #untilReservation="ngModel" required minlength="3">
+                                                <span>Until Reservation</span>
+                                            </div>
+                                            <div class="input-field col s4">
+                                                <input type="number" id="quantityPersonReservation" name="quantityPersonReservation" ngModel #quantityPersonReservation="ngModel">
+                                                <span>Quantity Person Reservation</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <textarea id="descriptionReservation" class="materialize-textarea" name="descriptionReservation" ngModel #descriptionReservation="ngModel"></textarea>
+                                                <span>Description Reservation</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <a (click)="addReservation(reservationForm)" class="center-align waves-effect waves-light btn-small">Add Reservation</a>    
+                                            <a (click)="closeModal()" class="center-align waves-effect waves-light btn-small">Close</a>       
+                                        </div>                                       
+                                </div>                       
+                            </div>                    
+                        </div>
+                    </div>                          
+                </div>            
+            </form>
+        </div>
+        <div id="listForm" class="col s12">
+            <div class="col s12 border border-dark" align="center">
+                <div class="col s6">
+                    <label>Select a Hotel</label>
+                    <select class="browser-default" id="IDHotel" name="IDHotel" (change)="getReservationsForHotel(IDHotel)" ngModel #IDHotel="ngModel" required>
+                        <option *ngFor="let i of oLstHotels" [ngValue]="i.idHotel">{{i.nameHotel}} - {{i.locationHotel}}</option>
+                    </select>                             
+                </div>
+                <div class="input-field col s6">
+                    <input type="number" class="validate" id="personIdentification"  (change)="getReservationForPerson($event)" name="personIdentification" placeholder="Person ID" minlength="3">
+                    <span>{{namePersonFound}}</span>
+                </div>                
+            </div>
+            <div class="row">
+                <div class="col s12" align="center">
+                    <h5>Reservation List</h5>
+                </div>
+                <table>
+                    <thead>
+                        <th>Person Name</th>
+                        <th>Since Reservation</th>
+                        <th>Until Reservation</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let k of oLstReservations">
+                            <td>{{k.personName}}</td>                            
+                            <td>{{k.sinceReservation | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{k.untilReservation | date: 'dd/MM/yyyy'}}</td>
+                            <div *ngIf="k.activeReservation; else notCheck">
+                                <a (click)="detailsAboutReservation(k)" class="waves-effect waves-light btn-small">Reservation Details</a>                        
+                            </div>
+                            <ng-template #notCheck>
+                                <span>Reservation was cancelled</span>
+                            </ng-template>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="modal" materialize="modal" [materializeParams]="model2Params" [materializeActions]="modalActions2">
+                    <div class="modal-content">
+                        <div class="container">
+                            <form class="col s12 border border-dark" #updateHotelForm="ngForm" *ngFor="let a of oLstSpecificReservation">
+                                <h5 class="center-align">Reservation details</h5>
+                                <div class="row">
+                                    <div class="input-field col s4">
+                                        <input readonly="readonly" value="{{a.personName}}" name="personName">
+                                        <span>Person Name Reservation</span>
+                                    </div>
+                                    <div class="input-field col s4">
+                                        <input readonly="readonly" value="{{a.phonePersonReservation}}" name="personPhone">
+                                        <span>Person Phone Reservation</span>
+                                    </div>
+                                    <div class="input-field col s4">
+                                        <input readonly="readonly" value="{{a.quantityPersonReservation}}" name="quantityPersonReservation">
+                                        <span>Quantity Person Reservation</span>
+                                    </div>
+                                </div>
+                                <div class="row">                                    
+                                    <div class="input-field col s4">
+                                        <input readonly="readonly" value="{{a.roomName}}" name="roomName">
+                                        <span>Room Name</span>
+                                    </div>
+                                    <div class="input-field col s4">
+                                        <input readonly="readonly" value="{{a.sinceReservation |date: 'dd/MM/yyyy'}}" name="sinceReservation">
+                                        <span>Since Reservation</span>
+                                    </div>
+                                    <div class="input-field col s4">
+                                        <input readonly="readonly" value="{{a.untilReservation |date: 'dd/MM/yyyy'}}" name="untilReservation">
+                                        <span>Until Reservation</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label>
+                                        <input type="checkbox" checked= "checked" (click)='cancelReservation(a.idReservation)'/>
+                                        <span>Reservation Status</span>                                        
+                                    </label>  
+                                </div>
+                                <div class="row">
+                                    <a (click)="closeDetailsReservationModal()" class="center-align waves-effect waves-light btn-small">Close</a>        
+                                </div>   
+                            </form>                           
+                        </div>                       
+                    </div>                    
+                </div>                   
+            </div>    
+        </div>
+    </div>    
+</html>
