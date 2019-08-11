@@ -1,6 +1,6 @@
 {
-    "appService.defaultWebAppToDeploy": "/subscriptions/7548bded-990e-4bb7-b484-ab6313ab6e36/resourceGroups/FrontTravelManagement/providers/Microsoft.Web/sites/FrontTM",
-    "appService.deploySubpath": "dist\\HotelManagement",
+    "appService.defaultWebAppToDeploy": "/subscriptions/7548bded-990e-4bb7-b484-ab6313ab6e36/resourceGroups/FrontTravelManagement/providers/Microsoft.Web/sites/TMTravelManagement",
+    "appService.deploySubpath": "dist",
     "appService.zipIgnorePattern": [
         ".vscode{,/**}"
     ]
